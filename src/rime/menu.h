@@ -39,6 +39,12 @@ class Menu {
   // rather than the total number of available candidates.
   size_t candidate_count() const { return candidates_.size(); }
 
+  void ReplaceCandidates(an<Candidate> candidate) { 
+    auto list = CandidateList();
+    list.push_back(candidate);
+    candidates_ = list;
+   }
+
   bool empty() const;
 
  private:

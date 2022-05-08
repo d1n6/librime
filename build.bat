@@ -47,7 +47,7 @@ if not defined PLATFORM_TOOLSET (
 )
 
 set clean=0
-set build_dir_base=build
+set build_dir_base=build-windows
 set build_dir_suffix=
 set build_config=Release
 set build_boost=0

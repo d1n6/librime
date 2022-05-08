@@ -1,4 +1,5 @@
 build/
+build-windows/
 build-static/
 debug/
 dist/
@@ -13,3 +14,4 @@ env.bat
 node_modules/
 *~
 .*.swp
+.vscode/
