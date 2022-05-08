@@ -3,6 +3,7 @@ set(CMAKE_USER_MAKE_RULES_OVERRIDE_CXX ${CMAKE_CURRENT_SOURCE_DIR}/cmake/cxx_fla
 
 project(rime)
 cmake_minimum_required(VERSION 3.10)
+set(CMAKE_CXX_STANDARD 14)
 
 set(rime_version 1.7.3)
 set(rime_soversion 1)
@@ -74,8 +75,6 @@ if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
   link_directories(${Boost_LIBRARY_DIRS})
 endif()
-
-find_package(CapnProto REQUIRED)
 
 if(ENABLE_LOGGING)
 
@@ -240,9 +239,6 @@ if(BUILD_SHARED_LIBS)
 else()
   set(rime_library rime-static)
 endif()
-
-add_subdirectory(proto)
-include_directories(${RIME_PROTO_INCLUDE_DIR})
 
 add_subdirectory(plugins)
 message(STATUS "rime_plugins_libs: ${rime_plugins_deps}")
