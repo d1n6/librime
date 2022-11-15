@@ -6,30 +6,31 @@ set(SAMPLE_SOVERSION 1)
 
 aux_source_directory(src sample_src)
 
-set(sample_library rime-sample)
+set(plugin_library rime-sample)
 set(sample_deps ${rime_library})
 set(sample_modules "sample")
 
-if(BUILD_SAMPLE)
+if(0)
   # to build the sample plugin, console app and tests, set BUILD_SAMPLE=ON
   set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
-  message(STATUS "${sample_library} provides modules: ${sample_modules}")
-  add_library(${sample_library} ${sample_src})
-  target_link_libraries(${sample_library} ${sample_deps})
-  set_target_properties(${sample_library}
+  message(STATUS "${plugin_library} provides modules: ${sample_modules}")
+  add_library(${plugin_library} ${sample_src})
+  target_link_libraries(${plugin_library} ${sample_deps})
+  set_target_properties(${plugin_library}
     PROPERTIES
     VERSION ${SAMPLE_VERSION}
     SOVERSION ${SAMPLE_SOVERSION})
   if(XCODE_VERSION)
-    set_target_properties(${sample_library}
+    set_target_properties(${plugin_library}
       PROPERTIES
       INSTALL_NAME_DIR "@rpath")
   endif(XCODE_VERSION)
-  install(TARGETS ${sample_library} DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR})
+  install(TARGETS ${plugin_library} DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR})
 
   add_subdirectory(tools)
   if(BUILD_TEST)
+    message(STATUS --------------${sample_src})
     add_subdirectory(test)
   endif()
 else()
@@ -41,7 +42,7 @@ else()
       POSITION_INDEPENDENT_CODE ON)
   endif()
 
-  set(plugin_name ${sample_library} PARENT_SCOPE)
+  set(plugin_name ${plugin_library} PARENT_SCOPE)
   set(plugin_objs $<TARGET_OBJECTS:rime-sample-objs> PARENT_SCOPE)
   set(plugin_deps ${sample_deps} PARENT_SCOPE)
   set(plugin_modules ${sample_modules} PARENT_SCOPE)

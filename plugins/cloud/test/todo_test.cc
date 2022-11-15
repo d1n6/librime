@@ -12,20 +12,20 @@
 #include <rime/segmentation.h>
 #include <rime/translation.h>
 #include <rime/translator.h>
-#include "../src/trivial_translator.h"
+#include "../src/todo_processor.h"
 
 using namespace rime;
 
-TEST(/*DISABLED_*/TrivialTranslatorTest, Query) {
+TEST(/*DISABLED_*/TodoTest, Query) {
   Registry& r = Registry::instance();
-  r.Register("trivial_translator", new Component<sample::TrivialTranslator>);
+  r.Register("todo_processor", new Component<TodoProcessor>);
   // make sure the component has been registered
-  auto component = Translator::Require("trivial_translator");
+  auto component = Processor::Require("todo_processor");
   ASSERT_TRUE(component != nullptr);
   Ticket ticket;
-  the<Translator> translator(component->Create(ticket));
+  the<Processor> processor(component->Create(ticket));
   // make sure the dict object has been created
-  ASSERT_TRUE(bool(translator));
+  ASSERT_TRUE(bool(processor));
   // lookup test
   const string test_input("jiaoji;");
   // 一千二百三十四
@@ -38,14 +38,14 @@ TEST(/*DISABLED_*/TrivialTranslatorTest, Query) {
                                "\xe5\x9b\x9b");
   Segment segment(0, test_input.length());
   segment.tags.insert("abc");
-  auto translation = translator->Query(test_input, segment);
-  ASSERT_TRUE(bool(translation));
-  ASSERT_FALSE(translation->exhausted());
-  auto candidate = translation->Peek();
-  ASSERT_TRUE(bool(candidate));
-  EXPECT_EQ("trivial", candidate->type());
-  EXPECT_EQ(expected_output, candidate->text());
-  EXPECT_EQ(segment.start, candidate->start());
-  EXPECT_EQ(segment.end, candidate->end());
-  EXPECT_TRUE(translation->Next());
+//  auto translation = processor->Query(test_input, segment);
+//  ASSERT_TRUE(bool(translation));
+//  ASSERT_FALSE(translation->exhausted());
+//  auto candidate = translation->Peek();
+//  ASSERT_TRUE(bool(candidate));
+//  EXPECT_EQ("trivial", candidate->type());
+//  EXPECT_EQ(expected_output, candidate->text());
+//  EXPECT_EQ(segment.start, candidate->start());
+//  EXPECT_EQ(segment.end, candidate->end());
+//  EXPECT_TRUE(translation->Next());
 }

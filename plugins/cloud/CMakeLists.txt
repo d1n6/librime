@@ -2,6 +2,11 @@ project(rime-cloud)
 cmake_minimum_required(VERSION 3.10)
 
 aux_source_directory(src cloud_src)
+#add_subdirectory(tools)
+#if(BUILD_TEST)
+#  message(STATUS --------------${sample_src})
+#  add_subdirectory(test)
+#endif()
 
 add_library(rime-cloud-objs OBJECT ${cloud_src})
 if(BUILD_SHARED_LIBS)

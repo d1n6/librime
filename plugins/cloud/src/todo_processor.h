@@ -36,9 +36,8 @@ class TodoProcessor : public Processor {
       if (res) {
         json j = json::parse(res->body);
         auto segment = context->composition().back();
-        auto result = New<SimpleCandidate>("cloud", segment.start, segment.end, j["data"].get<std::string>(), "cloud");
-        segment.menu->ReplaceCandidates(result);
-        context->Select(0);
+        auto result = New<SimpleCandidate>("cloud", segment.start, segment.end, j["data"].get<std::string>(), "(cloud)");
+        segment.menu->ReplaceCandidates(candidate, result);
         return kAccepted;
       }
     }

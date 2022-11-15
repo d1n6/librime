@@ -15,3 +15,5 @@ node_modules/
 *~
 .*.swp
 .vscode/
+.idea/
+**/cmake-build-debug
