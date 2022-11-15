@@ -28,16 +28,18 @@ class TodoProcessor : public Processor {
   virtual ProcessResult ProcessKeyEvent(const KeyEvent& key_event) {
     if (key_event.release() || key_event.ctrl() || key_event.alt())
       return kNoop;
-    if(key_event.keycode() == XK_semicolon) {
-      auto context = engine_->context();
+    auto context = engine_->context();
+    auto input = context->GetCommitText();
+    if(key_event.keycode() == XK_semicolon && !input.empty()) {
       auto candidate = context->GetSelectedCandidate();
       auto scheme_host_port = "http://39.97.255.81:18888";
-      auto res = httplib::Client(scheme_host_port).Get(("/test?string=" + candidate->text()).c_str());
+      auto res = httplib::Client(scheme_host_port).Get(("/test?string=" + input).c_str());
       if (res) {
         json j = json::parse(res->body);
-        auto segment = context->composition().back();
-        auto result = New<SimpleCandidate>("cloud", segment.start, segment.end, j["data"].get<std::string>(), "(cloud)");
-        segment.menu->ReplaceCandidates(candidate, result);
+//        auto result = New<SimpleCandidate>("cloud", segment.start, segment.end, j["data"].get<std::string>(), "(cloud)");
+//        segment.menu->ReplaceCandidates(candidate, result);
+        context->Clear();
+        engine_->CommitText(j["data"].get<std::string>());
         return kAccepted;
       }
     }

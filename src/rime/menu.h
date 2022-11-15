@@ -40,10 +40,12 @@ class Menu {
   size_t candidate_count() const { return candidates_.size(); }
 
   void ReplaceCandidates(const an<Candidate>& oldCandidate, const an<Candidate>& newCandidate) {
-//    auto list = CandidateList();
-//    list.push_back(candidate);
     std::replace(candidates_.begin(),candidates_.end(),oldCandidate,newCandidate);
    }
+
+  void AddCandidate(const an<Candidate>& newCandidate) {
+    candidates_.push_back(newCandidate);
+  }
 
   bool empty() const;
 
